@@ -2,7 +2,7 @@ import pandas as pd
 
 from app.domain.io import Request
 from app.domain.planet import Planet
-from app.usecase.usecase import AstrologyUsecase, TimezoneUsecase
+from app.usecase.usecase import AssignSignUsecase, TimezoneUsecase
 
 
 class AstrologyController:
@@ -19,10 +19,10 @@ class AstrologyController:
             self.req.HH,
             self.req.MM,
         )
-        self.astrology_usecase = AstrologyUsecase(dt_utc, latitude, longitude)
+        self.assign_sign_usecase = AssignSignUsecase(dt_utc, latitude, longitude)
 
     def get_desc_by_sign(self, df: pd.DataFrame) -> None:
-        your_sings = self.astrology_usecase.assign_sign_to_all_planets()
+        your_sings = self.assign_sign_usecase.assign_sign_to_all_planets()
 
         for planet, sign_id in zip(Planet, your_sings):
             print(df[(df["planet_id"] == planet.value) & (df["sign_id"] == sign_id)].values)

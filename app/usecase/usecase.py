@@ -7,7 +7,7 @@ from pytz import timezone
 from app.domain.planet import Planet
 
 
-class AstrologyUsecase:
+class AssignSignUsecase:
     def __init__(
         self,
         dt: datetime,
@@ -19,7 +19,7 @@ class AstrologyUsecase:
         self.lon = lon
 
     def assign_sign_to_all_planets(self) -> list[int]:
-        return [self._assign_sign_to_planet(e.value) for e in Planet]
+        return [self._assign_sign_to_planet(planet.value) for planet in Planet]
 
     def _assign_sign_to_planet(self, planet_id: int) -> int:  # TODO: intではなくPlanet?
         topocentric_position = self._calc_topocentric_position(planet_id)
