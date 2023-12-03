@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "charliermarsh.ruff",
+        "christian-kohler.path-intellisense",
+        "mechatroner.rainbow-csv",
+        "mhutchie.git-graph",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "oderwat.indent-rainbow",
+        "pkief.material-icon-theme",
+        "ryanluker.vscode-coverage-gutters",
+        "shardulm94.trailing-spaces",
+        "tabnine.tabnine-vscode",
+        "vivaxy.vscode-conventional-commits",
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    // python
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": false,
+            "source.organizeImports": true
+        },
+    },
+    "black-formatter.args": ["--config=${workspaceFolder}/pyproject.toml"],
+    "ruff.organizeImports": false,
+    "ruff.lint.args": ["--config=${workspaceFolder}/pyproject.toml"],
+    "autoDocstring.docstringFormat": "numpy"
+}
