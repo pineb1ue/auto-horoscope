@@ -3,11 +3,10 @@ from pathlib import Path
 from typing import Any
 
 import swisseph as swe
+from domain.infra.repository import IDescBySignRepository
+from domain.planet import Planet
 from injector import inject
 from pytz import timezone
-
-from app.domain.infra.repository import IDescBySignRepository
-from app.domain.planet import Planet
 
 
 class FetchDescUsecase:

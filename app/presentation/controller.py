@@ -1,28 +1,32 @@
-import pandas as pd
+from pathlib import Path
+from typing import Type
 
-from app.domain.io import Request
-from app.domain.planet import Planet
-from app.usecase.usecase import AssignSignUsecase, TimezoneUsecase
+from domain.io import Request
+from injector import inject
+from usecase.usecase import AssignUsecase, FetchDescUsecase, TimezoneUsecase
 
 
 class AstrologyController:
-    def __init__(self, req: Request) -> None:
-        self.req = req
+    @inject
+    def __init__(self, fetch_desc_usecase: FetchDescUsecase) -> None:
+        self.fetch_desc_usecase = fetch_desc_usecase
 
-        latitude: float = 36.4000
-        longitude: float = 139.4600
-        self.timezone_usecase = TimezoneUsecase()
-        dt_utc = self.timezone_usecase.convert_to_utc_from_jst(
-            self.req.yyyy,
-            self.req.mm,
-            self.req.dd,
-            self.req.HH,
-            self.req.MM,
-        )
-        self.assign_sign_usecase = AssignSignUsecase(dt_utc, latitude, longitude)
+    def fetch_desc_by_signs(
+        self,
+        req: Request,
+        path: Path,
+        latitude: float = 36.4000,
+        longitude: float = 139.4600,
+    ) -> None:
+        your_signs = self._input_your_birth_and_location(req, latitude, longitude)
+        self.fetch_desc_usecase.fetch_desc_by_signs(path, your_signs)
 
-    def get_desc_by_sign(self, df: pd.DataFrame) -> None:
-        your_sings = self.assign_sign_usecase.assign_sign_to_all_planets()
-
-        for planet, sign_id in zip(Planet, your_sings):
-            print(df[(df["planet_id"] == planet.value) & (df["sign_id"] == sign_id)].values)
+    def _input_your_birth_and_location(
+        self,
+        req: Request,
+        latitude: float,
+        longitude: float,
+    ) -> list[int]:
+        dt_utc = TimezoneUsecase().convert_to_utc_from_jst(req.yyyy, req.mm, req.dd, req.HH, req.MM)
+        assign_sign_usecase = AssignUsecase(dt_utc, latitude, longitude)
+        return assign_sign_usecase.assign_sign_to_all_planets()

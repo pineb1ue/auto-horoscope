@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
 
+from domain.res import DescBySignSchema
 from pandera.typing import DataFrame
-
-from app.domain.res import DescBySignSchema
 
 
 class IDescBySignRepository(ABC):
