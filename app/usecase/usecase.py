@@ -1,13 +1,27 @@
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 import swisseph as swe
+from injector import inject
 from pytz import timezone
 
+from app.domain.infra.repository import IDescBySignRepository
 from app.domain.planet import Planet
 
 
-class AssignSignUsecase:
+class FetchDescUsecase:
+    @inject
+    def __init__(self, repo: IDescBySignRepository) -> None:
+        self.repo = repo
+
+    def fetch_desc_by_signs(self, path: Path, sings: list[int]) -> None:
+        df = self.repo.read_csv(path)
+        for planet_id, sign_id in zip(Planet, sings):
+            print(df[(df["planet_id"] == planet_id.value) & (df["sign_id"] == sign_id)].values)
+
+
+class AssignUsecase:
     def __init__(
         self,
         dt: datetime,
