@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 import swisseph as swe
 from pytz import timezone
@@ -26,7 +27,7 @@ class AstrologyUsecase:
         sign_id = int(ecliptic_lon // 30)
         return sign_id
 
-    def _calc_topocentric_position(self, planet_id: int) -> list[float]:
+    def _calc_topocentric_position(self, planet_id: int) -> Any:
         jd_utc = swe.julday(
             self.dt.year,
             self.dt.month,
