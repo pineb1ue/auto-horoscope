@@ -18,10 +18,10 @@ class AstrologyUsecase:
         self.lat = lat
         self.lon = lon
 
-    def get_all_sings(self) -> list[int]:
-        return [self._get_sign_for_planet(e.value) for e in Planet]
+    def assign_sign_to_all_planets(self) -> list[int]:
+        return [self._assign_sign_to_planet(e.value) for e in Planet]
 
-    def _get_sign_for_planet(self, planet_id: int) -> int:  # TODO: intではなくPlanet?
+    def _assign_sign_to_planet(self, planet_id: int) -> int:  # TODO: intではなくPlanet?
         topocentric_position = self._calc_topocentric_position(planet_id)
         ecliptic_lon = topocentric_position[0]
         sign_id = int(ecliptic_lon // 30)

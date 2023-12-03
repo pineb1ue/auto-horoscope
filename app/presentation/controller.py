@@ -21,8 +21,8 @@ class AstrologyController:
         )
         self.astrology_usecase = AstrologyUsecase(dt_utc, latitude, longitude)
 
-    def get_desc(self, df: pd.DataFrame) -> None:
-        your_sings = self.astrology_usecase.get_all_sings()
+    def get_desc_by_sign(self, df: pd.DataFrame) -> None:
+        your_sings = self.astrology_usecase.assign_sign_to_all_planets()
 
         for planet, sign_id in zip(Planet, your_sings):
             print(df[(df["planet_id"] == planet.value) & (df["sign_id"] == sign_id)].values)

@@ -12,4 +12,4 @@ if __name__ == "__main__":
         "MM": 58,
     }
     controller = AstrologyController(Request(**req))
-    controller.get_desc(df=pd.read_csv("data/desc_sign.csv"))
+    controller.get_desc_by_sign(df=pd.read_csv("data/desc_sign.csv"))
