@@ -12,5 +12,7 @@
     "black-formatter.args": ["--config=${workspaceFolder}/pyproject.toml"],
     "ruff.organizeImports": false,
     "ruff.lint.args": ["--config=${workspaceFolder}/pyproject.toml"],
+    "mypy-type-checker.args": ["--config-file=${workspaceFolder}/pyproject.toml"],
+    "mypy-type-checker.ignorePatterns": ["${workspaceFolder}/tests/**/*.py"],
     "autoDocstring.docstringFormat": "numpy"
 }
