@@ -26,6 +26,7 @@ types-pytz = "^2023.3.1.1"
 pydantic = "^2.5.2"
 pandera = "^0.17.2"
 injector = "^0.21.0"
+taskipy = "^1.12.2"
 
 
 [tool.poetry.group.test.dependencies]
@@ -64,3 +65,4 @@ format = {cmd = "poetry run isort . && poetry run black .", help = "Run the form
 lint = {cmd = "poetry run ruff . && poetry run mypy .", help = "Run the linter."}  # リンタを実行
 ci = {cmd = "poetry run isort . && poetry run black . && poetry run ruff . && poetry run mypy .", help = "Run all CI tasks."}  # 全てのCIタスクを実行
 test = {cmd = "poetry run pytest .", help = "Run all tests."}
+dev = {cmd = "poetry run uvicorn app.main:app --reload", help = "Start the api"}
