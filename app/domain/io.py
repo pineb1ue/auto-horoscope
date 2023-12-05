@@ -12,6 +12,10 @@ class Request(BaseModel):
 
 
 class Response(BaseModel):
-    planets: list[str]
-    signs: list[str]
-    descriptions: list[str]
+    planet_id: int
+    sign_id: int
+    description: str
+
+
+class Responses(BaseModel):
+    result: list[Response]

@@ -4,7 +4,8 @@ from typing import cast
 from injector import inject
 from loguru import logger
 
-from app.domain.io import Request
+from app.domain.io import Request, Response, Responses
+from app.domain.planet import Planet
 from app.usecase.usecase import AssignUsecase, FetchDescUsecase, TimezoneUsecase
 
 
@@ -19,12 +20,20 @@ class AstrologyController:
         path: Path,
         latitude: float = 36.4000,
         longitude: float = 139.4600,
-    ) -> None:
+    ) -> Responses:
         try:
             your_signs = self._input_your_birth_and_location(req, latitude, longitude)
-            self.fetch_desc_usecase.fetch_desc_by_signs(path, your_signs)
+            your_descriptions = self.fetch_desc_usecase.fetch_desc_by_signs(path, your_signs)
+
+            responses = []
+            for planet, your_sign, your_desc in zip(Planet, your_signs, your_descriptions):
+                responses.append(Response(planet_id=planet.value, sign_id=your_sign, description=your_desc))
+
+            return Responses(result=responses)
+
         except Exception as e:
             logger.error(e)
+            raise
 
     def _input_your_birth_and_location(
         self,

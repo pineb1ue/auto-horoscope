@@ -17,15 +17,15 @@ class FetchDescUsecase:
     def __init__(self, repo: IDescBySignRepository) -> None:
         self.repo = repo
 
-    def fetch_desc_by_signs(self, path: Path, sings: list[int]) -> None:
+    def fetch_desc_by_signs(self, path: Path, sings: list[int]) -> list[str]:
         df = self.repo.read_csv(path)
 
         desc_by_signs = []
-        for planet_id, sign_id in zip(Planet, sings):
-            desc_by_sign = df[(df["planet_id"] == planet_id.value) & (df["sign_id"] == sign_id)].values
+        for planet, sign in zip(Planet, sings):
+            desc_by_sign = df[(df["planet_id"] == planet.value) & (df["sign_id"] == sign)].loc[:, "desc"].values[0]
             desc_by_signs.append(desc_by_sign)
 
-        print(desc_by_signs)
+        return desc_by_signs
 
 
 class AssignUsecase:
