@@ -1,11 +1,13 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import cast
 
 import swisseph as swe
 from domain.infra.repository import IDescBySignRepository
 from domain.planet import Planet
+from exception import TopocentricCalculationError
 from injector import inject
+from loguru import logger
 from pytz import timezone
 
 
@@ -16,8 +18,13 @@ class FetchDescUsecase:
 
     def fetch_desc_by_signs(self, path: Path, sings: list[int]) -> None:
         df = self.repo.read_csv(path)
+
+        desc_by_signs = []
         for planet_id, sign_id in zip(Planet, sings):
-            print(df[(df["planet_id"] == planet_id.value) & (df["sign_id"] == sign_id)].values)
+            desc_by_sign = df[(df["planet_id"] == planet_id.value) & (df["sign_id"] == sign_id)].values
+            desc_by_signs.append(desc_by_sign)
+
+        print(desc_by_signs)
 
 
 class AssignUsecase:
@@ -32,7 +39,11 @@ class AssignUsecase:
         self.lon = lon
 
     def assign_sign_to_all_planets(self) -> list[int]:
-        return [self._assign_sign_to_planet(planet.value) for planet in Planet]
+        try:
+            return [self._assign_sign_to_planet(planet.value) for planet in Planet]
+        except Exception as e:
+            logger.error(e)
+            raise TopocentricCalculationError()
 
     def _assign_sign_to_planet(self, planet_id: int) -> int:  # TODO: intではなくPlanet?
         topocentric_position = self._calc_topocentric_position(planet_id)
@@ -40,7 +51,7 @@ class AssignUsecase:
         sign_id = int(ecliptic_lon // 30)
         return sign_id
 
-    def _calc_topocentric_position(self, planet_id: int) -> Any:
+    def _calc_topocentric_position(self, planet_id: int) -> list[float]:
         jd_utc = swe.julday(
             self.dt.year,
             self.dt.month,
@@ -50,13 +61,10 @@ class AssignUsecase:
         flag = swe.FLG_SWIEPH | swe.FLG_SPEED
         swe.set_topo(self.lat, self.lon, 0.0)
         topocentric_position, _ = swe.calc_ut(jd_utc, planet_id, flag | swe.FLG_TOPOCTR)
-        return topocentric_position
+        return cast(list[float], topocentric_position)
 
 
 class TimezoneUsecase:
-    def __init__(self) -> None:
-        pass
-
     def convert_to_utc_from_jst(
         self,
         yyyy: int,
