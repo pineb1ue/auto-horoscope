@@ -11,7 +11,7 @@ from app.presentation.controller import AstrologyController
 app = FastAPI()
 
 
-@app.post("/api/v1/horo/")
+@app.post("/api/v1/horo/sign")
 async def get_desc_by_signs(req: Request) -> JSONResponse:
     controller = injector.get(AstrologyController)
     res = controller.fetch_desc_by_signs(req, Path("data/desc_sign.csv"))
