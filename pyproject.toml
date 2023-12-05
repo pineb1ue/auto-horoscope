@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "auto-horoscope"
+name = "app"
 version = "0.1.0"
 description = ""
 authors = ["Mamoru Matsunaga <pineb1ue10ngtree@gmail.com>"]
