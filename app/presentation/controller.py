@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import cast
 
-from domain.io import Request
 from injector import inject
 from loguru import logger
-from usecase.usecase import AssignUsecase, FetchDescUsecase, TimezoneUsecase
+
+from app.domain.io import Request
+from app.usecase.usecase import AssignUsecase, FetchDescUsecase, TimezoneUsecase
 
 
 class AstrologyController:
