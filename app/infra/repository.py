@@ -7,7 +7,7 @@ from pandera.typing import DataFrame
 
 from app.domain.infra.repository import IDescBySignRepository
 from app.domain.schema import DescBySignSchema
-from app.exception import CsvFileNotFoundError
+from app.exceptions.exception import CsvFileNotFoundError
 
 
 class DescBySignRepository(IDescBySignRepository):

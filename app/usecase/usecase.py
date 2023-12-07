@@ -9,7 +9,7 @@ from pytz import timezone
 
 from app.domain.infra.repository import IDescBySignRepository
 from app.domain.planet import Planet
-from app.exception import TopocentricCalculationError
+from app.exceptions.exception import TopocentricCalculationError
 
 
 class FetchDescUsecase:

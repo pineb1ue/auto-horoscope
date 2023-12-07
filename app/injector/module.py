@@ -1,4 +1,4 @@
-from injector import Binder, Injector, Module
+from injector import Binder, Module
 
 from app.domain.infra.repository import IDescBySignRepository
 from app.infra.repository import DescBySignRepository
@@ -11,6 +11,3 @@ class AstrologyModule(Module):
         binder.bind(AstrologyController)
         binder.bind(FetchDescUsecase)
         binder.bind(IDescBySignRepository, to=DescBySignRepository)  # type: ignore
-
-
-injector = Injector([AstrologyModule])

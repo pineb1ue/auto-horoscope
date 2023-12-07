@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.domain.io import Request
-from app.injector import injector
+from app.injector.injector import injector
 from app.presentation.controller import AstrologyController
 
 app = FastAPI()
