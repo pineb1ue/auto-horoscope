@@ -16,4 +16,4 @@ class DescBySignRepository(IDescBySignRepository):
             return cast(DataFrame[DescBySignSchema], pd.read_csv(path))
         except FileNotFoundError as e:
             logger.error(e)
-            raise CsvFileNotFoundError(e)
+            raise CsvFileNotFoundError()

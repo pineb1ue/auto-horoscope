@@ -4,7 +4,9 @@ from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from loguru import logger
 
+from app.config.logging_conf import logging_conf
 from app.domain.io import Request
 from app.injector.injector import injector
 from app.presentation.controller import AstrologyController
@@ -29,6 +31,11 @@ app.add_middleware(
 
 @app.post("/api/v1/horo/sign")
 async def get_desc_by_signs(req: Request) -> JSONResponse:
+    logger.info(logging_conf["START"])
+
     controller = injector.get(AstrologyController)
-    res = controller.fetch_desc_by_signs(req, Path("data/desc_sign.csv"))
-    return JSONResponse(content=jsonable_encoder(res))
+    desc = controller.fetch_desc_by_signs(req, Path("data/desc_sign.csv"))
+    res = JSONResponse(content=jsonable_encoder(desc))
+
+    logger.info(logging_conf["END"])
+    return res
