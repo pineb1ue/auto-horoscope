@@ -1,34 +1,14 @@
 from datetime import datetime
-from pathlib import Path
 from typing import cast
 
 import swisseph as swe
-from injector import inject
 from loguru import logger
-from pytz import timezone
 
-from app.domain.infra.repository import IDescBySignRepository
 from app.domain.planet import Planet
 from app.exceptions.exception import TopocentricCalculationError
 
 
-class FetchDescUsecase:
-    @inject
-    def __init__(self, repo: IDescBySignRepository) -> None:
-        self.repo = repo
-
-    def fetch_desc_by_signs(self, path: Path, sings: list[int]) -> list[str]:
-        df = self.repo.read_csv(path)
-
-        desc_by_signs = []
-        for planet, sign in zip(Planet, sings):
-            desc_by_sign = df[(df["planet_id"] == planet.value) & (df["sign_id"] == sign)].loc[:, "desc"].values[0]
-            desc_by_signs.append(desc_by_sign)
-
-        return desc_by_signs
-
-
-class AssignUsecase:
+class AssignSignUsecase:
     def __init__(
         self,
         dt: datetime,
@@ -63,18 +43,3 @@ class AssignUsecase:
         swe.set_topo(self.lat, self.lon, 0.0)
         topocentric_position, _ = swe.calc_ut(jd_utc, planet_id, flag | swe.FLG_TOPOCTR)
         return cast(list[float], topocentric_position)
-
-
-class TimezoneUsecase:
-    def convert_to_utc_from_jst(
-        self,
-        yyyy: int,
-        mm: int,
-        dd: int,
-        HH: int,
-        MM: int,
-    ) -> datetime:
-        dt = datetime(yyyy, mm, dd, HH, MM, 0)
-        dt_jst = dt.astimezone(timezone("Asia/Tokyo"))
-        dt_utc = dt_jst.astimezone(timezone("UTC"))
-        return dt_utc

@@ -6,7 +6,9 @@ from loguru import logger
 
 from app.domain.io import Request, Response, Responses
 from app.domain.planet import Planet
-from app.usecase.usecase import AssignUsecase, FetchDescUsecase, TimezoneUsecase
+from app.usecase.assign_sign_usecase import AssignSignUsecase
+from app.usecase.fetch_desc_usecase import FetchDescUsecase
+from app.usecase.timezone_usecase import TimezoneUsecase
 
 
 class AstrologyController:
@@ -42,5 +44,5 @@ class AstrologyController:
         longitude: float,
     ) -> list[int]:
         dt_utc = TimezoneUsecase().convert_to_utc_from_jst(req.yyyy, req.mm, req.dd, req.HH, req.MM)
-        assign_sign_usecase = AssignUsecase(dt_utc, latitude, longitude)
+        assign_sign_usecase = AssignSignUsecase(dt_utc, latitude, longitude)
         return cast(list[int], assign_sign_usecase.assign_sign_to_all_planets())
