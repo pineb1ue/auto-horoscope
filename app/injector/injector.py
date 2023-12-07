@@ -1,4 +1,4 @@
-from injector import Injector
+from injector import Injector  # type: ignore
 
 from app.injector.module import AstrologyModule
 
