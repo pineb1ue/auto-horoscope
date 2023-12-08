@@ -26,11 +26,22 @@ class AssignSignUsecase:
             logger.error(e)
             raise TopocentricCalculationError()
 
+    def calc_planet_positons(self) -> list[float]:
+        try:
+            return [self._calc_planet_positon(planet.value) for planet in Planet]
+        except Exception as e:
+            logger.error(e)
+            raise TopocentricCalculationError()
+
     def _assign_sign_to_planet(self, planet_id: int) -> int:  # TODO: intではなくPlanet?
-        topocentric_position = self._calc_topocentric_position(planet_id)
-        ecliptic_lon = topocentric_position[0]
+        ecliptic_lon = self._calc_planet_positon(planet_id)
         sign_id = int(ecliptic_lon // 30)
         return sign_id
+
+    def _calc_planet_positon(self, planet_id: int) -> float:
+        topocentric_position = self._calc_topocentric_position(planet_id)
+        ecliptic_lon = topocentric_position[0]
+        return ecliptic_lon
 
     def _calc_topocentric_position(self, planet_id: int) -> list[float]:
         jd_utc = swe.julday(
