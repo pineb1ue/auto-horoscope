@@ -1,6 +1,10 @@
+from datetime import datetime
 from enum import Enum
 
 import swisseph as swe
+from loguru import logger
+
+from app.exceptions.exception import TopocentricCalculationError
 
 
 class Planet(Enum):
@@ -14,6 +18,21 @@ class Planet(Enum):
     # Uranus = swe.URANUS
     # Neptune = swe.NEPTUNE
     # Pluto = swe.PLUTO
+
+    @classmethod
+    def calc_planet_positons(cls, jd_utc: datetime, lat: float, lon: float) -> list[float]:
+        try:
+            planet_positions = []
+            for planet in cls:
+                flag = swe.FLG_SWIEPH | swe.FLG_SPEED
+                swe.set_topo(lat, lon, 0.0)
+                topocentric_position, _ = swe.calc_ut(jd_utc, planet.value, flag | swe.FLG_TOPOCTR)
+                planet_positions.append(float(topocentric_position[0]))
+        except Exception as e:
+            logger.error(e)
+            raise TopocentricCalculationError()
+
+        return planet_positions
 
 
 class PlanetEmoji(Enum):

@@ -8,7 +8,6 @@ from loguru import logger
 
 from app.config.logging_conf import logging_conf
 from app.domain.io import Request
-from app.injector.injector import injector
 from app.presentation.controller import AstrologyController
 
 app = FastAPI()
@@ -33,7 +32,7 @@ app.add_middleware(
 async def get_desc_by_signs(req: Request) -> JSONResponse:
     logger.info(logging_conf["START"])
 
-    controller = injector.get(AstrologyController)
+    controller = AstrologyController()
     desc = controller.fetch_desc_by_signs(req, Path("data/desc_sign.csv"))
     res = JSONResponse(content=jsonable_encoder(desc))
 

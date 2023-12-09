@@ -11,7 +11,7 @@ class FetchDescUsecase:
     def __init__(self, repo: IDescBySignRepository) -> None:
         self.repo = repo
 
-    def fetch_desc_by_signs(self, path: Path, sings: list[int]) -> list[str]:
+    def fetch_desc_by_signs(self, sings: list[int], path: Path) -> list[str]:
         df = self.repo.read_csv(path)
 
         desc_by_signs = []

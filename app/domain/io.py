@@ -1,4 +1,10 @@
+from datetime import datetime
+from typing import cast
+
+import swisseph as swe
+from loguru import logger
 from pydantic import BaseModel
+from pytz import timezone
 
 
 class Request(BaseModel):
@@ -9,6 +15,20 @@ class Request(BaseModel):
     MM: int
     latitude: float = 36.4000
     longitude: float = 139.4600
+
+    def convert_to_julian_day(self) -> datetime:
+        dt = datetime(self.yyyy, self.mm, self.dd, self.HH, self.MM)
+        dt_jst = dt.astimezone(timezone("Asia/Tokyo"))
+        dt_utc = dt_jst.astimezone(timezone("UTC"))
+        return cast(
+            datetime,
+            swe.julday(
+                dt_utc.year,
+                dt_utc.month,
+                dt_utc.day,
+                dt_utc.hour + dt_utc.minute / 60 + dt_utc.second / 3600,
+            ),
+        )
 
 
 class Response(BaseModel):
