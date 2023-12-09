@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import cast
 
 import swisseph as swe
-from loguru import logger
 from pydantic import BaseModel
 from pytz import timezone
 

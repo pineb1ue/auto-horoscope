@@ -56,15 +56,15 @@ class HoroscopeUsecase:
             )
 
         ax2.set_xticks(np.radians(house_positions))
-        ax2.set_rgrids([0.8, 1.1])  # type: ignore
+        ax2.set_rgrids([0.8, 1.1])  # type: ignore[attr-defined]
 
         ax2.set_xticklabels([])
         ax2.set_yticklabels([])
 
-        ax2.axes.xaxis.set_ticklabels([])  # type: ignore
-        ax2.axes.yaxis.set_ticklabels([])  # type: ignore
+        ax2.axes.xaxis.set_ticklabels([])  # type: ignore[union-attr]
+        ax2.axes.yaxis.set_ticklabels([])  # type: ignore[union-attr]
         ax2.grid(True)
 
-        ax2.set_theta_zero_location("E", offset=180 - ascendant)  # type: ignore
+        ax2.set_theta_zero_location("E", offset=180 - ascendant)  # type: ignore[attr-defined]
 
         fig.savefig(str(save_path))

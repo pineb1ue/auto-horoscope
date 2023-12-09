@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from injector import inject
 from loguru import logger
 
 from app.domain.io import Request, Response, Responses
