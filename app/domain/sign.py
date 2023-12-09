@@ -14,3 +14,26 @@ class Sign(Enum):
     CAPRICORN = 9
     AQUARIUS = 10
     PISCES = 11
+
+
+class SignEmoji(Enum):
+    ARIES = "♈"
+    TAURUS = "♉"
+    GEMINI = "♊"
+    CANCER = "♋"
+    LEO = "♌"
+    VIRGO = "♍"
+    LIBRA = "♎"
+    SCORPIO = "♏"
+    SAGITTARIUS = "♐"
+    CAPRICORN = "♑"
+    AQUARIUS = "♒"
+    PISCES = "♓"
+
+    @classmethod
+    def get_names(cls) -> list[str]:
+        return [emoji.name for emoji in cls]
+
+    @classmethod
+    def get_values(cls) -> list[str]:
+        return [emoji.value for emoji in cls]

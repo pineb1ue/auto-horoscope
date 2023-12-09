@@ -14,3 +14,24 @@ class Planet(Enum):
     # Uranus = swe.URANUS
     # Neptune = swe.NEPTUNE
     # Pluto = swe.PLUTO
+
+
+class PlanetEmoji(Enum):
+    SUN = "$☉$"
+    MOON = "$☽$"
+    MERCURY = "$☿$"
+    VENUS = "$♀$"
+    MARS = "$♂$"
+    JUPITER = "$♃$"
+    SATURN = "$♄$"
+    # Uranus = "$♅$"
+    # Neptune = "$♆$"
+    # Pluto = "$♇$"
+
+    @classmethod
+    def get_names(cls) -> list[str]:
+        return [emoji.name for emoji in cls]
+
+    @classmethod
+    def get_values(cls) -> list[str]:
+        return [emoji.value for emoji in cls]
