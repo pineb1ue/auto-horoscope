@@ -28,6 +28,9 @@ isort = "^5.12.0"
 types-pytz = "^2023.3.1.1"
 pydantic = "^2.5.2"
 taskipy = "^1.12.2"
+sphinx = "^7.2.6"
+sphinx-rtd-theme = "^2.0.0"
+types-pyyaml = "^6.0.12.12"
 
 
 [tool.poetry.group.test.dependencies]
@@ -59,7 +62,8 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 ignore_missing_imports = true
-exclude = ["^tests/[^/]+\\.py$"]  # tests/**/*.pyのみ除外
+explicit_package_bases = true
+exclude = ["^tests/[^/]+\\.py$", "^docs"]  # tests/**/*.pyのみ除外
 
 [tool.taskipy.tasks]
 format = {cmd = "poetry run isort . && poetry run black .", help = "Run the formatter."}  # フォーマッタを実行
@@ -67,3 +71,7 @@ lint = {cmd = "poetry run ruff . && poetry run mypy .", help = "Run the linter."
 ci = {cmd = "poetry run isort . && poetry run black . && poetry run ruff . && poetry run mypy .", help = "Run all CI tasks."}  # 全てのCIタスクを実行
 test = {cmd = "poetry run pytest .", help = "Run all tests."}
 dev = {cmd = "poetry run uvicorn app.main:app --reload", help = "Start the api"}
+up = {cmd = "docker compose up", help = "start container"}
+down = {cmd = "docker compose down", help = "stop container"}
+gen-docs = {cmd = "sphinx-apidoc --force -o docs/source/resources app/", help = "Generate Sphinx documentation sources"}
+build-docs = {cmd = "sphinx-build -b html docs/source/ docs/_build", help = "Build documentation from sources"}
