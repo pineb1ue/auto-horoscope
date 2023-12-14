@@ -9,6 +9,9 @@ from app.usecase.astrology_usecase import AstrologyUsecase
 
 class AstrologyController:
     def __init__(self) -> None:
+        """
+        Initialize the AstrologyController.
+        """
         pass
 
     def fetch_desc_by_signs(
@@ -18,16 +21,33 @@ class AstrologyController:
         latitude: float = 36.4000,
         longitude: float = 139.4600,
     ) -> Responses:
+        """
+        Fetch horoscope descriptions based on astrological signs.
+
+        Parameters
+        ----------
+        req : Request
+            The incoming HTTP request object.
+        path : Path
+            The path to the file containing horoscope descriptions.
+        latitude : float, optional
+            The latitude of the location, by default 36.4000.
+        longitude : float, optional
+            The longitude of the location, by default 139.4600.
+
+        Returns
+        -------
+        Responses
+            The HTTP response containing the horoscope descriptions as JSON.
+        """
         try:
             jd_utc = req.convert_to_julian_day()
 
             astrology_usecase = AstrologyUsecase(jd_utc, latitude, longitude)
 
-            # ホロスコープ作成
-            astrology_usecase.create_horoscope(save_path=Path("/Users/pineb1ue/Desktop/sample.png"))
-            # サインの計算
+            # Calculate signs
             your_signs = astrology_usecase.assign_sign_to_planets()
-            # 文章作成
+            # Generate descriptions
             your_descriptions = astrology_usecase.fetch_desc_by_signs(your_signs, path)
 
             responses = []
@@ -35,6 +55,33 @@ class AstrologyController:
                 responses.append(Response(planet_id=planet.value, sign_id=your_sign, description=your_desc))
 
             return Responses(result=responses)
+
+        except Exception as e:
+            logger.error(e)
+            raise
+
+    def create_horoscope(
+        self,
+        req: Request,
+        latitude: float = 36.4000,
+        longitude: float = 139.4600,
+    ) -> None:
+        """
+        Create a horoscope and save it to the specified path.
+
+        Parameters
+        ----------
+        req : Request
+            The incoming HTTP request object.
+        latitude : float, optional
+            The latitude of the location, by default 36.4000.
+        longitude : float, optional
+            The longitude of the location, by default 139.4600.
+        """
+        try:
+            jd_utc = req.convert_to_julian_day()
+            astrology_usecase = AstrologyUsecase(jd_utc, latitude, longitude)
+            astrology_usecase.create_horoscope(save_path=Path("/Users/pineb1ue/Desktop/sample.png"))
 
         except Exception as e:
             logger.error(e)

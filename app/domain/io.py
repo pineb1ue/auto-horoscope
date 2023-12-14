@@ -16,6 +16,14 @@ class Request(BaseModel):
     longitude: float = 139.4600
 
     def convert_to_julian_day(self) -> datetime:
+        """
+        Converts the request date and time to Julian day.
+
+        Returns
+        -------
+        datetime
+            The converted Julian day.
+        """
         dt = datetime(self.yyyy, self.mm, self.dd, self.HH, self.MM)
         dt_jst = dt.astimezone(timezone("Asia/Tokyo"))
         dt_utc = dt_jst.astimezone(timezone("UTC"))

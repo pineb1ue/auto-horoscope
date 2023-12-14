@@ -36,26 +36,10 @@ app.usecase.house\_usecase module
    :undoc-members:
    :show-inheritance:
 
-app.usecase.planet\_usecase module
-----------------------------------
-
-.. automodule:: app.usecase.planet_usecase
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 app.usecase.sign\_usecase module
 --------------------------------
 
 .. automodule:: app.usecase.sign_usecase
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-app.usecase.time\_usecase module
---------------------------------
-
-.. automodule:: app.usecase.time_usecase
    :members:
    :undoc-members:
    :show-inheritance:

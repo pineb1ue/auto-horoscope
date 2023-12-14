@@ -20,7 +20,24 @@ class Planet(Enum):
     # Pluto = swe.PLUTO
 
     @classmethod
-    def calc_planet_positons(cls, jd_utc: datetime, lat: float, lon: float) -> list[float]:
+    def calc_planet_positions(cls, jd_utc: datetime, lat: float, lon: float) -> list[float]:
+        """
+        Calculate planet positions based on the provided Julian date, latitude, and longitude.
+
+        Parameters
+        ----------
+        jd_utc : datetime
+            The Julian date in UTC.
+        lat : float
+            The latitude of the location.
+        lon : float
+            The longitude of the location.
+
+        Returns
+        -------
+        list[float]
+            A list of planet positions.
+        """
         try:
             planet_positions = []
             for planet in cls:
@@ -49,8 +66,24 @@ class PlanetEmoji(Enum):
 
     @classmethod
     def get_names(cls) -> list[str]:
+        """
+        Returns a list of the names of the PlanetEmoji enum members.
+
+        Returns
+        -------
+        list[str]
+            List of emoji names.
+        """
         return [emoji.name for emoji in cls]
 
     @classmethod
     def get_values(cls) -> list[str]:
+        """
+        Returns a list of the emoji values of the PlanetEmoji enum members.
+
+        Returns
+        -------
+        list[str]
+            List of emoji values.
+        """
         return [emoji.value for emoji in cls]
