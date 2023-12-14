@@ -1,6 +1,6 @@
 class SignUsecase:
     @staticmethod
-    def assign_sign_to_planets(planet_positions: list[float]) -> list[int]:
+    def assign_signs_to_planets(planet_positions: list[float]) -> list[int]:
         """
         Assign astrological signs to planet positions.
 

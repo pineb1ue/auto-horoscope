@@ -14,7 +14,7 @@ class AstrologyController:
         """
         pass
 
-    def fetch_desc_by_signs(
+    def fetch_horoscope_descriptions(
         self,
         req: Request,
         path: Path,
@@ -46,9 +46,9 @@ class AstrologyController:
             astrology_usecase = AstrologyUsecase(jd_utc, latitude, longitude)
 
             # Calculate signs
-            your_signs = astrology_usecase.assign_sign_to_planets()
+            your_signs = astrology_usecase.assign_signs_to_planets()
             # Generate descriptions
-            your_descriptions = astrology_usecase.fetch_desc_by_signs(your_signs, path)
+            your_descriptions = astrology_usecase.fetch_horoscope_descriptions(your_signs, path)
 
             responses = []
             for planet, your_sign, your_desc in zip(Planet, your_signs, your_descriptions):
@@ -60,7 +60,7 @@ class AstrologyController:
             logger.error(e)
             raise
 
-    def create_horoscope(
+    def create_and_save_horoscope(
         self,
         req: Request,
         latitude: float = 36.4000,

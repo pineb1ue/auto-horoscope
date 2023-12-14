@@ -29,7 +29,7 @@ app.add_middleware(
 
 
 @app.post("/api/v1/horo/desc")
-async def get_desc(req: Request) -> JSONResponse:
+async def get_horoscope_descriptions(req: Request) -> JSONResponse:
     """
     Get horoscope descriptions based on astrological signs.
 
@@ -50,7 +50,7 @@ async def get_desc(req: Request) -> JSONResponse:
     controller = AstrologyController()
 
     # Fetch horoscope descriptions based on astrological signs
-    desc = controller.fetch_desc_by_signs(req, Path("data/desc_sign.csv"))
+    desc = controller.fetch_horoscope_descriptions(req, Path("data/desc_sign.csv"))
 
     # Convert the result to JSON and create an HTTP response
     res = JSONResponse(content=jsonable_encoder(desc))
@@ -63,7 +63,7 @@ async def get_desc(req: Request) -> JSONResponse:
 
 
 @app.post("/api/v1/horo/fig")
-async def create_horoscope(req: Request) -> JSONResponse:
+async def create_horoscope_figure(req: Request) -> JSONResponse:
     """
     Create a horoscope figure based on the provided request.
 
@@ -84,7 +84,7 @@ async def create_horoscope(req: Request) -> JSONResponse:
     controller = AstrologyController()
 
     # Create a horoscope figure based on the provided request
-    controller.create_horoscope(req)
+    controller.create_and_save_horoscope(req)
 
     # Create an HTTP response with a success status code
     res = JSONResponse(content=None, status_code=200)

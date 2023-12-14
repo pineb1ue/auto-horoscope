@@ -27,7 +27,7 @@ class HoroscopeUsecase:
         self.lat = lat
         self.lon = lon
 
-    def create_horoscope(self, planet_positions: list[float], save_path: Path) -> None:
+    def create_and_save_horoscope(self, planet_positions: list[float], save_path: Path) -> None:
         """
         Create a horoscope and save it to the specified path.
 
@@ -40,12 +40,12 @@ class HoroscopeUsecase:
         """
         # Calculate house positions and ascendant
         house_usecase = HouseUsecase(self.jd_utc, self.lat, self.lon)
-        house_positions, ascendant = house_usecase.calc_house_and_ascendant()
+        house_positions, ascendant = house_usecase.calc_house_positions_and_ascendant()
 
         # Draw the horoscope chart and save it
-        self._draw_horoscope_chart(ascendant, planet_positions, house_positions, save_path=save_path)
+        self._draw_and_save_horoscope_chart(ascendant, planet_positions, house_positions, save_path=save_path)
 
-    def _draw_horoscope_chart(
+    def _draw_and_save_horoscope_chart(
         self,
         ascendant: float,
         planet_positions: list[float],

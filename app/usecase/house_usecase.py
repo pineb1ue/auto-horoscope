@@ -21,7 +21,7 @@ class HouseUsecase:
         self.lat = lat
         self.lon = lon
 
-    def calc_house_and_ascendant(self) -> tuple[tuple[float], float]:
+    def calc_house_positions_and_ascendant(self) -> tuple[tuple[float], float]:
         """
         Calculate house positions and ascendant based on the provided parameters.
 

@@ -29,7 +29,7 @@ class AstrologyUsecase:
         # Calculate the positions of planets
         self.planet_positions = Planet.calc_planet_positions(self.jd_utc, self.lat, self.lon)
 
-    def create_horoscope(self, save_path: Path) -> None:
+    def create_and_save_horoscope(self, save_path: Path) -> None:
         """
         Create a horoscope and save it to the specified path.
 
@@ -39,9 +39,9 @@ class AstrologyUsecase:
             The path where the horoscope will be saved.
         """
         horoscope_usecase = HoroscopeUsecase(self.jd_utc, self.lat, self.lon)
-        horoscope_usecase.create_horoscope(self.planet_positions, save_path)
+        horoscope_usecase.create_and_save_horoscope(self.planet_positions, save_path)
 
-    def assign_sign_to_planets(self) -> list[int]:
+    def assign_signs_to_planets(self) -> list[int]:
         """
         Assign astrological signs to the planets based on their positions.
 
@@ -50,9 +50,9 @@ class AstrologyUsecase:
         list[int]
             A list of astrological signs assigned to each planet.
         """
-        return SignUsecase.assign_sign_to_planets(self.planet_positions)
+        return SignUsecase.assign_signs_to_planets(self.planet_positions)
 
-    def fetch_desc_by_signs(self, signs: list[int], path: Path) -> list[str]:
+    def fetch_horoscope_descriptions(self, signs: list[int], path: Path) -> list[str]:
         """
         Fetch horoscope descriptions based on astrological signs.
 
@@ -69,4 +69,4 @@ class AstrologyUsecase:
             A list of horoscope descriptions corresponding to the provided signs.
         """
         fetch_usecase = injector.get(FetchDescUsecase)
-        return fetch_usecase.fetch_desc_by_signs(signs, path)
+        return fetch_usecase.fetch_horoscope_descriptions(signs, path)

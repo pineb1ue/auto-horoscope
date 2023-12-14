@@ -19,7 +19,7 @@ class FetchDescUsecase:
         """
         self.repo = repo
 
-    def fetch_desc_by_signs(self, signs: list[int], path: Path) -> list[str]:
+    def fetch_horoscope_descriptions(self, signs: list[int], path: Path) -> list[str]:
         """
         Fetch horoscope descriptions based on astrological signs.
 
