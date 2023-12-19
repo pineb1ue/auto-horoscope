@@ -81,7 +81,7 @@ class AstrologyController:
         try:
             jd_utc = req.convert_to_julian_day()
             astrology_usecase = AstrologyUsecase(jd_utc, latitude, longitude)
-            astrology_usecase.create_horoscope(save_path=Path("/Users/pineb1ue/Desktop/sample.png"))
+            astrology_usecase.create_and_save_horoscope(save_path=Path("/Users/pineb1ue/Desktop/sample.png"))
 
         except Exception as e:
             logger.error(e)
