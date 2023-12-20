@@ -73,5 +73,4 @@ test = {cmd = "poetry run pytest .", help = "Run all tests."}
 dev = {cmd = "poetry run uvicorn app.main:app --reload", help = "Start the api"}
 up = {cmd = "docker compose up", help = "start container"}
 down = {cmd = "docker compose down", help = "stop container"}
-gen-docs = {cmd = "sphinx-apidoc --force -o docs/source/resources app/", help = "Generate Sphinx documentation sources"}
-build-docs = {cmd = "sphinx-build -b html docs/source/ docs/_build", help = "Build documentation from sources"}
+docs = {cmd = "sphinx-apidoc --force -o docs/source/resources app/ && sphinx-build -b html docs/source/ docs/_build", help = "Generate and build documentation from sources"}
