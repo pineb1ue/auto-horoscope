@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import cast
 
 import swisseph as swe
 from pydantic import BaseModel
@@ -21,7 +20,7 @@ class Request(BaseModel):
 
         Returns
         -------
-        datetime
+        float
             The converted Julian day.
         """
         dt = datetime(self.yyyy, self.mm, self.dd, self.HH, self.MM)

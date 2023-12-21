@@ -1,4 +1,3 @@
-from datetime import datetime
 from pathlib import Path
 
 from app.domain.planet import Planet
@@ -9,13 +8,13 @@ from app.usecase.sign_usecase import SignUsecase
 
 
 class AstrologyUsecase:
-    def __init__(self, jd_utc: datetime, lat: float, lon: float) -> None:
+    def __init__(self, jd_utc: float, lat: float, lon: float) -> None:
         """
         Initialize the AstrologyUsecase with the given parameters.
 
         Parameters
         ----------
-        jd_utc : datetime
+        jd_utc : float
             The Julian date in UTC.
         lat : float
             The latitude of the location.

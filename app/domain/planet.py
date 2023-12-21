@@ -1,4 +1,3 @@
-from datetime import datetime
 from enum import Enum
 
 import swisseph as swe
@@ -20,13 +19,13 @@ class Planet(Enum):
     # Pluto = swe.PLUTO
 
     @classmethod
-    def calc_planet_positions(cls, jd_utc: datetime, lat: float, lon: float) -> list[float]:
+    def calc_planet_positions(cls, jd_utc: float, lat: float, lon: float) -> list[float]:
         """
         Calculate planet positions based on the provided Julian date, latitude, and longitude.
 
         Parameters
         ----------
-        jd_utc : datetime
+        jd_utc : float
             The Julian date in UTC.
         lat : float
             The latitude of the location.

@@ -1,4 +1,3 @@
-from datetime import datetime
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -10,13 +9,13 @@ from app.usecase.house_usecase import HouseUsecase
 
 
 class HoroscopeUsecase:
-    def __init__(self, jd_utc: datetime, lat: float, lon: float) -> None:
+    def __init__(self, jd_utc: float, lat: float, lon: float) -> None:
         """
         Initialize the HoroscopeUsecase with the specified parameters.
 
         Parameters
         ----------
-        jd_utc : datetime
+        jd_utc : float
             The Julian date in UTC.
         lat : float
             The latitude of the location.

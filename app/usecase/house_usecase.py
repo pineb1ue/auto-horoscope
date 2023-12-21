@@ -1,16 +1,14 @@
-from datetime import datetime
-
 import swisseph as swe
 
 
 class HouseUsecase:
-    def __init__(self, jd_utc: datetime, lat: float, lon: float) -> None:
+    def __init__(self, jd_utc: float, lat: float, lon: float) -> None:
         """
         Initialize the HouseUsecase with the given parameters.
 
         Parameters
         ----------
-        jd_utc : datetime
+        jd_utc : float
             Julian Date in UTC.
         lat : float
             Latitude of the location.
