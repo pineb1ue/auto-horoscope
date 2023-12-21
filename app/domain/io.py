@@ -15,7 +15,7 @@ class Request(BaseModel):
     latitude: float = 36.4000
     longitude: float = 139.4600
 
-    def convert_to_julian_day(self) -> datetime:
+    def convert_to_julian_day(self) -> float:
         """
         Converts the request date and time to Julian day.
 
@@ -27,14 +27,13 @@ class Request(BaseModel):
         dt = datetime(self.yyyy, self.mm, self.dd, self.HH, self.MM)
         dt_jst = dt.astimezone(timezone("Asia/Tokyo"))
         dt_utc = dt_jst.astimezone(timezone("UTC"))
-        return cast(
-            datetime,
+        return float(
             swe.julday(
                 dt_utc.year,
                 dt_utc.month,
                 dt_utc.day,
                 dt_utc.hour + dt_utc.minute / 60 + dt_utc.second / 3600,
-            ),
+            )
         )
 
 
