@@ -3,14 +3,15 @@ from pathlib import Path
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-from app.domain.io import Request
 from app.presentation.controller import AstrologyController
+from app.presentation.request import Request
+from app.presentation.response import Response
 
 router = APIRouter()
 
 
 @router.post("/api/v1/horo/desc")
-async def get_horoscope_descriptions(req: Request) -> JSONResponse:
+async def get_horoscope_descriptions(req: Request) -> list[Response]:
     """
     Get horoscope descriptions based on astrological signs.
 
@@ -21,8 +22,8 @@ async def get_horoscope_descriptions(req: Request) -> JSONResponse:
 
     Returns
     -------
-    JSONResponse
-        The HTTP response containing the horoscope descriptions as JSON.
+    list[Response]
+        The HTTP response containing the horoscope descriptions.
     """
 
     # Create an instance of AstrologyController

@@ -34,13 +34,3 @@ class Request(BaseModel):
                 dt_utc.hour + dt_utc.minute / 60 + dt_utc.second / 3600,
             )
         )
-
-
-class Response(BaseModel):
-    planet_id: int
-    sign_id: int
-    description: str
-
-
-class Responses(BaseModel):
-    result: list[Response]

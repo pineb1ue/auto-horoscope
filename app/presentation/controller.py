@@ -1,12 +1,12 @@
 from pathlib import Path
 
-from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from loguru import logger
 
 from app.config.logging_conf import logging_conf
-from app.domain.io import Request, Response, Responses
 from app.domain.planet import Planet
+from app.presentation.request import Request
+from app.presentation.response import Response
 from app.usecase.astrology_usecase import AstrologyUsecase
 
 
@@ -23,7 +23,7 @@ class AstrologyController:
         path: Path,
         latitude: float = 36.4000,
         longitude: float = 139.4600,
-    ) -> JSONResponse:
+    ) -> list[Response]:
         """
         Fetch horoscope descriptions based on astrological signs.
 
@@ -40,8 +40,8 @@ class AstrologyController:
 
         Returns
         -------
-        JSONResponse
-            The HTTP response containing the horoscope descriptions as JSON.
+        list[Response]
+            The HTTP response containing the horoscope descriptions.
         """
         try:
             logger.info(logging_conf["START"])
@@ -61,8 +61,7 @@ class AstrologyController:
 
             logger.info(logging_conf["END"])
 
-            # Convert the result to JSON and create an HTTP response
-            return JSONResponse(content=jsonable_encoder(Responses(result=responses)))
+            return responses
 
         except Exception as e:
             logger.error(e)
