@@ -7,19 +7,9 @@ from app.domain.schema import DescBySignSchema
 
 
 class IDescBySignRepository(ABC):
+    def __init__(self, path: Path) -> None:
+        raise NotImplementedError
+
     @abstractmethod
-    def read_csv(self, path: Path) -> DataFrame[DescBySignSchema]:
-        """
-        Abstract method to read a CSV file and return a Pandas DataFrame with DescBySignSchema.
-
-        Parameters
-        ----------
-        path : Path
-            The path to the CSV file.
-
-        Returns
-        -------
-        DataFrame[DescBySignSchema]
-            Pandas DataFrame with DescBySignSchema.
-        """
+    def load(self) -> DataFrame[DescBySignSchema]:
         raise NotImplementedError

@@ -5,8 +5,8 @@
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.fixAll": false,
-            "source.organizeImports": true
+            "source.fixAll": "never",
+            "source.organizeImports": "explicit"
         },
     },
     "black-formatter.args": ["--config=${workspaceFolder}/pyproject.toml"],

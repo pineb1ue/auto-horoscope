@@ -1,55 +1,34 @@
-from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
+from loguru import logger
 
-from app.domain.planet import PlanetEmoji
+from app.domain.planet import Planet, PlanetEmoji
 from app.domain.sign import SignEmoji
 from app.usecase.house_usecase import HouseUsecase
 
 
 class HoroscopeUsecase:
-    def __init__(self, jd_utc: float, lat: float, lon: float) -> None:
-        """
-        Initialize the HoroscopeUsecase with the specified parameters.
+    def __init__(self, house_usecase: HouseUsecase) -> None:
+        self.house_usecase = house_usecase
 
-        Parameters
-        ----------
-        jd_utc : float
-            The Julian date in UTC.
-        lat : float
-            The latitude of the location.
-        lon : float
-            The longitude of the location.
-        """
-        self.jd_utc = jd_utc
-        self.lat = lat
-        self.lon = lon
+    def create(self, jd_utc: float, lat: float = 36.4000, lon: float = 139.4600) -> None:
+        logger.info("Start HoroscopeUsecase")
 
-    def create_and_save_horoscope(self, planet_positions: list[float], save_path: Path) -> None:
-        """
-        Create a horoscope and save it to the specified path.
-
-        Parameters
-        ----------
-        planet_positions : list[float]
-            The positions of the planets.
-        save_path : Path
-            The path where the horoscope will be saved.
-        """
+        # Calculate the positions of planets
+        planet_positions = Planet.calc_planet_positions(jd_utc, lat, lon)
         # Calculate house positions and ascendant
-        house_usecase = HouseUsecase(self.jd_utc, self.lat, self.lon)
-        house_positions, ascendant = house_usecase.calc_house_positions_and_ascendant()
+        house_positions, ascendant = self.house_usecase.calc_house_positions_and_ascendant(jd_utc, lat, lon)
 
         # Draw the horoscope chart and save it
-        self._draw_and_save_horoscope_chart(ascendant, planet_positions, house_positions, save_path=save_path)
+        self._draw_and_save_horoscope_chart(ascendant, planet_positions, house_positions)
+
+        logger.info("End HoroscopeUsecase")
 
     def _draw_and_save_horoscope_chart(
         self,
         ascendant: float,
         planet_positions: list[float],
         house_positions: tuple[float],
-        save_path: Path,
         color1: str = "blue",
         color2: str = "purple",
     ) -> None:
@@ -64,8 +43,6 @@ class HoroscopeUsecase:
             The positions of the planets.
         house_positions : tuple[float]
             The positions of the houses.
-        save_path : Path
-            The path where the horoscope chart will be saved.
         color1 : str
             The color for even signs in the pie chart.
         color2 : str
@@ -106,4 +83,4 @@ class HoroscopeUsecase:
 
         ax2.set_theta_zero_location("E", offset=180 - ascendant)  # type: ignore[attr-defined]
 
-        fig.savefig(str(save_path))
+        fig.savefig("/Users/pineb1ue/Desktop/sample.png")

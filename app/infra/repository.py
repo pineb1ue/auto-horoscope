@@ -11,27 +11,15 @@ from app.exceptions.exception import CsvFileNotFoundError
 
 
 class DescBySignRepository(IDescBySignRepository):
-    def read_csv(self, path: Path) -> DataFrame[DescBySignSchema]:
-        """
-        Reads a CSV file and returns a Pandas DataFrame with DescBySignSchema.
+    def __init__(self, path: Path) -> None:
+        self.path = path
 
-        Parameters
-        ----------
-        path : Path
-            The path to the CSV file.
-
-        Returns
-        -------
-        DataFrame[DescBySignSchema]
-            Pandas DataFrame with DescBySignSchema.
-
-        Raises
-        ------
-        CsvFileNotFoundError
-            If the specified CSV file is not found.
-        """
+    def load(self) -> DataFrame[DescBySignSchema]:
         try:
-            return cast(DataFrame[DescBySignSchema], pd.read_csv(path))
+            logger.info("Start DescBySignRepository")
+            df = pd.read_csv(self.path)
+            logger.info("End DescBySignRepository")
+            return cast(DataFrame[DescBySignSchema], df)
         except FileNotFoundError as e:
             logger.error(e)
             raise CsvFileNotFoundError()
