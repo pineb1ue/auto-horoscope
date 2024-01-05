@@ -5,5 +5,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
       target: runner
+    environment:
+      DESC_PATH: ${DESC_PATH}
     ports:
       - "8000:80"
