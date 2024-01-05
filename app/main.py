@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.domain.container import Container
-from app.presentation.router import router
+from app.presentation.endpoint import router
 
 
 def create_app() -> FastAPI:
@@ -16,8 +16,8 @@ def create_app() -> FastAPI:
     ]
 
     app = FastAPI()
-    app.include_router(router)
     app.container = container  # type: ignore[attr-defined]
+    app.include_router(router)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,

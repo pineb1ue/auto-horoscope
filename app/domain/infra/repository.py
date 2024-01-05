@@ -3,13 +3,13 @@ from pathlib import Path
 
 from pandera.typing import DataFrame
 
-from app.domain.schema import DescBySignSchema
+from app.domain.schema import DescSchema
 
 
-class IDescBySignRepository(ABC):
+class IDescRepository(ABC):
     def __init__(self, path: Path) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def load(self) -> DataFrame[DescBySignSchema]:
+    def get_all(self) -> DataFrame[DescSchema]:
         raise NotImplementedError

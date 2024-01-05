@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from app.domain.container import Container
 from app.domain.horoscope import HoroDesc
 from app.presentation.request import Request
-from app.usecase.fetch_desc_usecase import FetchDescUsecase
+from app.usecase.desc_usecase import DescUsecase
 from app.usecase.horoscope_usecase import HoroscopeUsecase
 
 router = APIRouter()
@@ -15,9 +15,9 @@ router = APIRouter()
 @inject
 async def get_horoscope_descriptions(
     req: Request,
-    fetch_desc_usecase: FetchDescUsecase = Depends(Provide[Container.fetch_desc_usecase]),
+    desc_usecase: DescUsecase = Depends(Provide[Container.desc_usecase]),
 ) -> list[HoroDesc]:
-    return fetch_desc_usecase.run(req.convert_to_julian_day(), req.latitude, req.longitude)
+    return desc_usecase.get_desc(req.convert_to_julian_day(), req.latitude, req.longitude)
 
 
 @router.post("/api/v1/horo/fig")
