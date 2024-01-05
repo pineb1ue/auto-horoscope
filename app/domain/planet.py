@@ -3,7 +3,7 @@ from enum import Enum
 import swisseph as swe
 from loguru import logger
 
-from app.exceptions.exception import TopocentricCalculationError
+from app.domain.exception import TopocentricCalculationError
 
 
 class Planet(Enum):

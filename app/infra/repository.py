@@ -5,9 +5,9 @@ import pandas as pd
 from loguru import logger
 from pandera.typing import DataFrame
 
+from app.domain.exception import CsvFileNotFoundError
 from app.domain.infra.repository import IDescRepository
 from app.domain.schema import DescSchema
-from app.exceptions.exception import CsvFileNotFoundError
 
 
 class DescRepository(IDescRepository):
